@@ -240,20 +240,14 @@ function showCheckoutForm() {
     <form class="checkout-form" aria-labelledby="checkout-title">
       <button class="close-checkout" type="button" aria-label="Close checkout">×</button>
       <div class="checkout-brand"><span>Khyxx</span> Digitals<small>secure order checkout</small></div>
-      <p class="eyebrow">step 1 of 2 · celebration & contact</p>
+      <p class="eyebrow">step 1 of 2 · client & payment</p>
       <h2 id="checkout-title">Your Order Details</h2>
-      <p class="checkout-intro">Enter your event information and preferred payment method to finalize your order.</p>
+      <p class="checkout-intro">Enter your contact details and preferred payment method to finalize your order.</p>
 
       <div class="details-fields">
         <label>Your Full Name<input required name="name" placeholder="e.g. Camille Rodriguez" autocomplete="name" /></label>
         <label>Email Address<input required type="email" name="email" placeholder="camille@example.com" autocomplete="email" /></label>
-        <label>Phone / Mobile<input required type="tel" name="phone" placeholder="+63 917 123 4567" autocomplete="tel" /></label>
-        <label>Couple's Names<input required name="coupleNames" placeholder="e.g. Camille & Rafael" /></label>
-        <label>Target Wedding Date<input type="date" name="weddingDate" /></label>
-        <label>Facebook / Event Link<input type="url" name="facebookLink" placeholder="https://facebook.com/your-page" /></label>
-        <label>Custom Requests & Notes
-          <textarea name="content" rows="2" placeholder="Color palette, special wording, or design questions..."></textarea>
-        </label>
+        <label style="grid-column: 1 / -1;">Facebook / Contact Link<input required type="url" name="facebookLink" placeholder="https://facebook.com/your-profile" /></label>
       </div>
 
       <fieldset class="payment-methods">
@@ -273,16 +267,27 @@ function showCheckoutForm() {
           </span>
         </label>
       </fieldset>
-      <div style="margin: 8px 0 14px; text-align: center;">
-        <a href="store/mop.png" target="_blank" style="font-size: 0.85rem; color: var(--wine); text-decoration: underline; font-weight: 500;">
-          📲 Click to view & scan official QR Code (GCash & BPI)
+
+      <div style="margin: 6px 0 12px; text-align: center;">
+        <a href="store/mop.png" target="_blank" style="font-size: 0.82rem; color: var(--wine); text-decoration: underline; font-weight: 600;">
+          📲 View & Scan Official InstaPay QR Code (GCash & BPI)
         </a>
       </div>
 
-      <label style="margin-top: 10px;">
-        Payment Reference / Ref No. (Optional)
-        <input name="paymentReference" placeholder="Enter reference no. if already paid via app" />
-      </label>
+      <div style="background: #faf6f5; border: 1px solid #dec4b6; border-radius: 6px; padding: 12px; margin: 10px 0 14px;">
+        <label style="font-size: 0.82rem; font-weight: 600; color: var(--wine); margin-bottom: 4px; display: block;">
+          Payment Reference / Ref No. (Optional)
+          <input name="paymentReference" placeholder="Enter 12-digit ref no. if already paid via app" style="width: 100%; margin-top: 4px; margin-bottom: 10px;" />
+        </label>
+
+        <label style="font-size: 0.82rem; font-weight: 600; color: var(--wine); margin-bottom: 4px; display: block;">
+          Upload Proof of Payment (Screenshot)
+          <input type="file" name="receipt" id="checkout-receipt-input" accept="image/*" style="width: 100%; margin-top: 4px; font-size: 0.8rem; background: #fff;" />
+        </label>
+        <div id="receipt-preview-wrap" style="display: none; margin-top: 8px; text-align: center;">
+          <img id="receipt-preview-img" src="" alt="Receipt Preview" style="max-height: 120px; border-radius: 4px; border: 1px solid #dec4b6; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" />
+        </div>
+      </div>
 
       <div class="checkout-summary">
         <div class="summary-heading">
@@ -310,8 +315,25 @@ function showCheckoutForm() {
 
   const form = modal.querySelector('form');
   const error = modal.querySelector('.checkout-error');
+  const receiptInput = modal.querySelector('#checkout-receipt-input');
+  const previewWrap = modal.querySelector('#receipt-preview-wrap');
+  const previewImg = modal.querySelector('#receipt-preview-img');
   const close = () => modal.remove();
   modal.querySelector('.close-checkout').addEventListener('click', close);
+
+  receiptInput?.addEventListener('change', () => {
+    const file = receiptInput.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        previewWrap.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewWrap.style.display = 'none';
+    }
+  });
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -320,16 +342,13 @@ function showCheckoutForm() {
 
     const name = form.elements.name.value.trim();
     const email = form.elements.email.value.trim();
-    const phone = form.elements.phone.value.trim();
-    const coupleNames = form.elements.coupleNames.value.trim();
-    const weddingDate = form.elements.weddingDate.value;
     const facebookLink = form.elements.facebookLink.value.trim();
-    const content = form.elements.content.value.trim();
     const paymentMethod = form.elements.paymentMethod.value;
     const paymentReference = form.elements.paymentReference.value.trim();
+    const receiptFile = receiptInput?.files?.[0];
 
-    if (!name || !email || !coupleNames) {
-      error.textContent = 'Please fill out your name, email, and couple names.';
+    if (!name || !email) {
+      error.textContent = 'Please fill out your full name and email address.';
       return;
     }
 
@@ -337,12 +356,14 @@ function showCheckoutForm() {
     submitBtn.textContent = 'Creating your order...';
 
     const orderPayload = {
-      customer: { name, email, phone },
-      event: { coupleNames, weddingDate, facebookLink, content },
+      customer: { name, email, facebookLink },
+      event: { facebookLink },
       items: [...cart],
       paymentMethod,
       paymentReference
     };
+
+    let orderId = `KHYXX-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
     try {
       const res = await fetch('/api/orders', {
@@ -351,68 +372,95 @@ function showCheckoutForm() {
         body: JSON.stringify(orderPayload)
       });
 
-      let data;
       if (res.ok) {
-        data = await res.json();
-      } else {
-        throw new Error('Server returned an error');
+        const data = await res.json();
+        if (data.orderId) orderId = data.orderId;
+
+        if (receiptFile) {
+          const formData = new FormData();
+          formData.append('receipt', receiptFile);
+          if (paymentReference) formData.append('referenceNumber', paymentReference);
+          formData.append('paymentMethod', paymentMethod);
+          await fetch(`/api/orders/${encodeURIComponent(orderId)}/payment`, {
+            method: 'POST',
+            body: formData
+          }).catch(console.warn);
+        }
       }
-
-      const orderId = data.orderId || `KHYXX-${Date.now()}`;
-
-      // Reset and clear cart
-      localStorage.removeItem('khyxx-cart');
-      cart.length = 0;
-      saveCart();
-      renderCart();
-
-      // Show Order Success Screen
-      modal.innerHTML = `
-        <div class="checkout-form order-details-success">
-          <span class="sparkle-icon">✦</span>
-          <p class="eyebrow">order created</p>
-          <h2 style="color: var(--wine);">Congratulations!</h2>
-          <p class="checkout-intro">Thank you, <strong>${name}</strong>! Your order for <strong>${coupleNames}</strong> has been registered.</p>
-
-          <div style="background: #fff; border: 1px solid #dec4b6; padding: 16px; border-radius: 6px; margin: 18px 0; text-align: center;">
-            <small style="text-transform: uppercase; color: #87777a; letter-spacing: 0.08em; display: block;">Your Order Code</small>
-            <strong style="font-size: 1.5rem; color: var(--wine); letter-spacing: 0.05em; display: block; margin: 6px 0;">${orderId}</strong>
-            <button type="button" class="button secondary" style="padding: 4px 10px; font-size: 0.72rem;" onclick="navigator.clipboard.writeText('${orderId}'); alert('Order code copied!');">
-              Copy Order Code 📋
-            </button>
-          </div>
-
-          <p style="font-size: 0.85rem; color: #705b5f;">
-            Next step: Send payment via <strong>${paymentMethod.toUpperCase()}</strong> and track your order to immediately unlock your Canva templates.
-          </p>
-
-          <div style="display: grid; gap: 8px; margin-top: 20px;">
-            <a href="track-order.html?id=${encodeURIComponent(orderId)}" class="button button-dark" style="text-align: center; text-decoration: none;">
-              Track Order & View Payment Info <span>→</span>
-            </a>
-            <button class="button secondary close-success-btn" type="button">Close Window</button>
-          </div>
-        </div>
-      `;
-
-      modal.querySelector('.close-success-btn')?.addEventListener('click', close);
-
-      const confirmation = document.querySelector('.order-confirmation');
-      if (confirmation) {
-        confirmation.innerHTML = `Order <strong>${orderId}</strong> received! Track your order anytime on <a href="track-order.html?id=${orderId}">the tracking portal</a>.`;
-        confirmation.classList.add('visible');
-      }
-
     } catch (err) {
-      console.warn('Backend order submission fallback:', err);
-      // Client-side fallback if server offline
-      const fallbackId = `KHYXX-LOCAL-${Date.now()}`;
-      localStorage.removeItem('khyxx-cart');
-      cart.length = 0;
-      saveCart();
-      renderCart();
-      close();
-      alert(`Order ${fallbackId} placed successfully! We will contact you soon.`);
+      console.warn('Live API unavailable (e.g. GitHub Pages static mode), saving order locally:', err);
+    }
+
+    // Save to localStorage for tracking portal
+    const receiptDataUrl = previewImg.src || '';
+    const localOrder = {
+      id: orderId,
+      createdAt: new Date().toISOString(),
+      customer: { name, email, facebookLink },
+      items: [...cart],
+      total: cart.reduce((t, i) => t + (i.price * (i.quantity || 1)), 0),
+      paymentMethod,
+      paymentReference,
+      paymentReceipt: receiptDataUrl || null,
+      status: (paymentReference || receiptFile) ? 'payment_submitted' : 'pending_payment',
+      templateLinks: cart.map(item => ({
+        name: `${item.name} Canva Suite`,
+        url: item.canvaUrl || 'https://khyxxdigitals.my.canva.site/template'
+      }))
+    };
+
+    try {
+      const existingOrders = JSON.parse(localStorage.getItem('khyxx-orders') || '[]');
+      existingOrders.unshift(localOrder);
+      localStorage.setItem('khyxx-orders', JSON.stringify(existingOrders));
+    } catch (e) {
+      console.warn('LocalStorage save error:', e);
+    }
+
+    // Reset and clear cart
+    localStorage.removeItem('khyxx-cart');
+    cart.length = 0;
+    saveCart();
+    renderCart();
+
+    // Show Order Success Screen
+    modal.innerHTML = `
+      <div class="checkout-form order-details-success">
+        <span class="sparkle-icon">✦</span>
+        <p class="eyebrow">order created</p>
+        <h2 style="color: var(--wine);">Congratulations!</h2>
+        <p class="checkout-intro">Thank you, <strong>${name}</strong>! Your order has been placed.</p>
+
+        <div style="background: #fff; border: 1px solid #dec4b6; padding: 16px; border-radius: 6px; margin: 18px 0; text-align: center;">
+          <small style="text-transform: uppercase; color: #87777a; letter-spacing: 0.08em; display: block;">Your Order Code</small>
+          <strong style="font-size: 1.5rem; color: var(--wine); letter-spacing: 0.05em; display: block; margin: 6px 0;">${orderId}</strong>
+          <button type="button" class="button secondary" style="padding: 4px 10px; font-size: 0.72rem;" onclick="navigator.clipboard.writeText('${orderId}'); alert('Order code copied!');">
+            Copy Order Code 📋
+          </button>
+        </div>
+
+        <p style="font-size: 0.85rem; color: #705b5f;">
+          ${receiptFile ? '✅ Proof of payment uploaded! We will verify your transaction shortly.' : `Next step: Send payment via <strong>${paymentMethod.toUpperCase()}</strong> and upload your receipt screenshot.`}
+        </p>
+
+        <div style="display: grid; gap: 8px; margin-top: 20px;">
+          <a href="track-order.html?id=${encodeURIComponent(orderId)}" class="button button-dark" style="text-align: center; text-decoration: none;">
+            Track Order & View Payment Info <span>→</span>
+          </a>
+          <a href="https://www.facebook.com/share/196Nm6DMZN/" target="_blank" class="button secondary" style="text-align: center; text-decoration: none;">
+            Message us on Facebook
+          </a>
+          <button class="button secondary close-success-btn" type="button">Close Window</button>
+        </div>
+      </div>
+    `;
+
+    modal.querySelector('.close-success-btn')?.addEventListener('click', close);
+
+    const confirmation = document.querySelector('.order-confirmation');
+    if (confirmation) {
+      confirmation.innerHTML = `Order <strong>${orderId}</strong> received! Track your order anytime on <a href="track-order.html?id=${orderId}">the tracking portal</a>.`;
+      confirmation.classList.add('visible');
     }
   });
 }
