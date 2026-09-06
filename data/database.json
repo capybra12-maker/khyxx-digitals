@@ -202,12 +202,12 @@
   ],
   "settings": {
     "storeName": "Khyxx Digitals",
-    "gcashNumber": "+63 926 7233 515",
-    "gcashName": "Shintal Khye / Khyxx Digitals",
-    "mayaNumber": "+63 926 7233 515",
-    "bankName": "BDO Unibank",
-    "bankAccount": "0045 2819 9283",
-    "bankAccountName": "Shintal Khye (Khyxx Digitals)",
+    "gcashNumber": "0956 568 2259",
+    "gcashName": "Shintal Khye Dichos",
+    "bankName": "BPI",
+    "bankAccount": "4046 6419 04",
+    "bankAccountName": "Shintal Khye Talaid Dichos",
+    "paymentQrImage": "store/mop.png",
     "adminPin": "khyxx2026",
     "contactEmail": "shintalkhy@gmail.com",
     "backupEmail": "khyxx1503@gmail.com"

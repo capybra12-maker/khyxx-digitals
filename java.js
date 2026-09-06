@@ -261,25 +261,23 @@ function showCheckoutForm() {
         <label class="payment-option">
           <input required type="radio" name="paymentMethod" value="gcash" checked />
           <span>
-            <strong>GCash (0926 723 3515)</strong>
-            <small>Instant payment via GCash app · Shintal Khye / Khyxx Digitals</small>
+            <strong>GCash (0956 568 2259)</strong>
+            <small>Instant payment · Shintal Khye Dichos</small>
           </span>
         </label>
         <label class="payment-option">
           <input type="radio" name="paymentMethod" value="bank_transfer" />
           <span>
-            <strong>BDO Unibank (0045 2819 9283)</strong>
-            <small>Online banking or cash deposit · Shintal Khye</small>
-          </span>
-        </label>
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="maya" />
-          <span>
-            <strong>Maya (0926 723 3515)</strong>
-            <small>Send to Maya mobile wallet</small>
+            <strong>BPI Bank Transfer (4046 6419 04)</strong>
+            <small>Online banking / InstaPay · Shintal Khye Talaid Dichos</small>
           </span>
         </label>
       </fieldset>
+      <div style="margin: 8px 0 14px; text-align: center;">
+        <a href="store/mop.png" target="_blank" style="font-size: 0.85rem; color: var(--wine); text-decoration: underline; font-weight: 500;">
+          📲 Click to view & scan official QR Code (GCash & BPI)
+        </a>
+      </div>
 
       <label style="margin-top: 10px;">
         Payment Reference / Ref No. (Optional)
