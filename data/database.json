@@ -1,0 +1,216 @@
+{
+  "products": [
+    {
+      "id": "invitation-1",
+      "name": "Invitation #1",
+      "subtitle": "Romantic script suite",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Wedding Invitation.png",
+      "previewUrl": "https://vt.tiktok.com/ZSVfKcaxm/",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Editable Canva invitation template",
+        "Matching details card layout",
+        "RSVP information section",
+        "Print-ready PDF & high-res PNG outputs",
+        "Font pairing & styling guide"
+      ],
+      "featured": true
+    },
+    {
+      "id": "template-1",
+      "name": "Template #1",
+      "subtitle": "Full wedding website",
+      "category": "website",
+      "price": 899,
+      "image": "store/Screenshot 2026-08-21 185614.png",
+      "previewUrl": "https://khyxxdigitals.my.canva.site/template",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Envelope Cover & Welcome Page",
+        "Love Story & Couple Welcome Message",
+        "Live Countdown Timer & Music Player",
+        "Entourage, Attire Guide & Moodboard",
+        "Gift Registry, Live RSVP Form & FAQs",
+        "Photo Gallery Section"
+      ],
+      "featured": true
+    },
+    {
+      "id": "olive-branch",
+      "name": "Olive Branch",
+      "subtitle": "Printable details card",
+      "category": "printable",
+      "price": 149,
+      "image": "store/Wedding Invitation 2.png",
+      "previewUrl": "https://khyxxdigitals.my.canva.site/template",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Editable wedding details card",
+        "Ceremony and reception sections",
+        "Gift guide and dress-code styling details",
+        "Print-ready PDF & PNG files with bleed marks"
+      ],
+      "featured": true
+    },
+    {
+      "id": "invitation-2",
+      "name": "Invitation #2",
+      "subtitle": "Blush & Ivory suite",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Wedding Invitation 2.png",
+      "previewUrl": "https://vt.tiktok.com/ZSVfo5Vvk/",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Save-the-date digital template",
+        "Matching envelope liner design",
+        "Fully editable names, dates, and event details",
+        "Print-ready PDF and PNG files"
+      ],
+      "featured": true
+    },
+    {
+      "id": "romantic-vows",
+      "name": "Romantic Vows",
+      "subtitle": "Signature romantic script",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Wedding Invitation.png",
+      "previewUrl": "https://vt.tiktok.com/ZSVfKcaxm/",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Editable Canva template suite",
+        "Delicate lettering with soft floral accents",
+        "Save the date, formal invite & details card",
+        "Instant Canva link access"
+      ],
+      "featured": false
+    },
+    {
+      "id": "minimal-letters",
+      "name": "Minimal Letters",
+      "subtitle": "Clean modern typography",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Wedding Invitation 2.png",
+      "previewUrl": "https://vt.tiktok.com/ZSVfo5Vvk/",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Minimal editorial typography",
+        "Soft neutral palette with timeless finish",
+        "Save the date, RSVP & reception cards",
+        "Instant Canva link access"
+      ],
+      "featured": false
+    },
+    {
+      "id": "garden-suite",
+      "name": "Garden Suite",
+      "subtitle": "Botanical romance",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Wedding Invitation.png",
+      "previewUrl": "https://vt.tiktok.com/ZSVfKcaxm/",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Warm botanical tones & foliage accents",
+        "Ideal for outdoor, garden & countryside weddings",
+        "Complete 3-piece invitation suite",
+        "Instant Canva link access"
+      ],
+      "featured": false
+    },
+    {
+      "id": "velvet-luxe",
+      "name": "Velvet Luxe",
+      "subtitle": "Statement luxury edition",
+      "category": "invitation",
+      "price": 399,
+      "image": "store/Screenshot 2026-08-21 185614.png",
+      "previewUrl": "https://khyxxdigitals.my.canva.site/template",
+      "canvaUrl": "https://khyxxdigitals.my.canva.site/template",
+      "inclusions": [
+        "Rich dramatic tones with gold & wine styling",
+        "Grand evening & ballroom wedding aesthetic",
+        "Premium multi-page invitation layout",
+        "Instant Canva link access"
+      ],
+      "featured": false
+    }
+  ],
+  "orders": [
+    {
+      "id": "KHYXX-2026-1001",
+      "createdAt": "2026-09-05T10:15:00.000Z",
+      "customer": {
+        "name": "Camille Rodriguez",
+        "email": "camille.rodriguez@example.com",
+        "phone": "+63 917 123 4567"
+      },
+      "event": {
+        "coupleNames": "Camille & Rafael",
+        "weddingDate": "2026-12-09",
+        "facebookLink": "https://facebook.com/camille.rafael.wedding",
+        "content": "Theme is dusty rose and champagne gold. We'd love custom font pairing for the entourage page."
+      },
+      "items": [
+        {
+          "id": "invitation-1",
+          "name": "Invitation #1",
+          "price": 399,
+          "quantity": 1
+        },
+        {
+          "id": "template-1",
+          "name": "Template #1",
+          "price": 899,
+          "quantity": 1
+        }
+      ],
+      "total": 1298,
+      "paymentMethod": "gcash",
+      "paymentReference": "902184918231",
+      "paymentReceipt": null,
+      "status": "paid",
+      "digitalDelivered": true,
+      "templateLinks": [
+        {
+          "name": "Invitation #1 (Canva)",
+          "url": "https://khyxxdigitals.my.canva.site/template"
+        },
+        {
+          "name": "Template #1 Wedding Website (Canva)",
+          "url": "https://khyxxdigitals.my.canva.site/template"
+        }
+      ],
+      "adminNotes": "Payment verified via GCash. Customer notified."
+    }
+  ],
+  "inquiries": [
+    {
+      "id": "INQ-2026-101",
+      "createdAt": "2026-09-04T14:20:00.000Z",
+      "name": "Janine Santos",
+      "email": "janine.santos@example.com",
+      "eventType": "Custom Wedding Website",
+      "eventDate": "2026-11-20",
+      "message": "Hi Khye! Inquiring about a custom wedding website with interactive RSVP and background music for our November beach wedding in Batangas.",
+      "status": "replied"
+    }
+  ],
+  "settings": {
+    "storeName": "Khyxx Digitals",
+    "gcashNumber": "+63 926 7233 515",
+    "gcashName": "Shintal Khye / Khyxx Digitals",
+    "mayaNumber": "+63 926 7233 515",
+    "bankName": "BDO Unibank",
+    "bankAccount": "0045 2819 9283",
+    "bankAccountName": "Shintal Khye (Khyxx Digitals)",
+    "adminPin": "khyxx2026",
+    "contactEmail": "shintalkhy@gmail.com",
+    "backupEmail": "khyxx1503@gmail.com"
+  }
+}
+
